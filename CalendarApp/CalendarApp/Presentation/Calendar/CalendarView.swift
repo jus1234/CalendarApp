@@ -11,10 +11,9 @@ struct CalendarView: View {
     @ObservedObject private var viewModel = CalendarViewModel()
     @State private var dayId: Day.ID?
     @State private var isFirstLoad: Bool = true
-    @State private var toDayId: Day.ID?
     
     init() {
-        toDayId = viewModel.toDay.id
+        dayId = viewModel.toDay.id
     }
     
     var body: some View {
@@ -24,36 +23,34 @@ struct CalendarView: View {
                     LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
                         ForEach(viewModel.dayList) { day in
                             DayCell(day: day)
+                                .id(day.id)
                                 .onAppear {
                                     if day.month == .january && day.year == viewModel.firstYear && !isFirstLoad {
-                                        viewModel.fetchPreviousYear()
                                         dayId = day.id
+                                        viewModel.fetchPreviousYear()
                                     }
                                     if day.month == .december && day.year == viewModel.lastYear {
-                                        viewModel.fetchAfterYear()
                                         dayId = day.id
+                                        viewModel.fetchAfterYear()
+                                    }
+                                    if day.id == dayId {
+                                        isFirstLoad = false
                                     }
                                 }
-                                .id(day.id)
+                                
                         }
                         
                     }
                     .scrollTargetLayout()
-                    .background(
-                        GeometryReader { geometry in
-                            Color.clear.onAppear {
-                                scrollViewProxy.scrollTo(toDayId)
-                                isFirstLoad.toggle()
-                            }
-                        }
-                    )
+                    .onAppear {
+                        dayId = viewModel.toDay.id
+                        scrollViewProxy.scrollTo(dayId)
+                    }
                 }
             }
             .frame(height: 600)
             .scrollPosition(id: $dayId)
-            
-            //GeometryReader
-            // 다른 달 다르게 표시
+            .scrollIndicators(.hidden)
             
         }
     }

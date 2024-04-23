@@ -24,23 +24,45 @@ class CalendarViewModel: ObservableObject {
     
     func fetchPreviousYear() {
         firstYear -= 1
-        guard var previousYear: Int = dayList.first?.year else {
-            return
-        }
-        previousYear -= 1
-        dayList = calendarService.fetchYear(year: previousYear) + dayList
+        dayList = attachPreviousDays(days: calendarService.fetchYear(year: firstYear) + dayList.filter { $0.year > firstYear })
     }
     
     func fetchAfterYear() {
         lastYear += 1
-        guard var afterYear: Int = dayList.last?.year else {
-            return
-        }
-        afterYear += 1
-        dayList = dayList + calendarService.fetchYear(year: afterYear)
+        dayList = dayList + calendarService.fetchYear(year: lastYear)
     }
     
     private func setToday() {
-        toDay = dayList.filter { Day.isSame(lhs: toDay, rhs: $0) }[0]
+        guard 
+            let targetDay = dayList.filter({ Day.isSame(lhs: toDay, rhs: $0) }).first
+        else {
+            return
+        }
+        toDay = targetDay
+        dayList = attachPreviousDays(days: dayList)
+    }
+    
+    private func attachPreviousDays(days: [Day]) -> [Day] {
+        var dayList = [WeekDay.sunday, .monday, .tuesday, .wednesday, .thursday, .friday]
+        var comparableWeekDayList = [WeekDay.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+        var previousDays: [Day] = []
+        var date = 31
+        while !dayList.isEmpty {
+            guard 
+                let weekDay = dayList.popLast(),
+                let firstDay = previousDays.count > 0 ? previousDays.first : days.first,
+                let comparableDay = comparableWeekDayList.popLast()
+            else {
+                return days
+            }
+            if firstDay.weekDay == .sunday {
+                break
+            }
+            if firstDay.weekDay == comparableDay {
+                previousDays = [Day(date: date, weekDay: weekDay, month: .december, year: firstYear - 1)] + previousDays
+            }
+            date -= 1
+        }
+        return previousDays + days
     }
 }
