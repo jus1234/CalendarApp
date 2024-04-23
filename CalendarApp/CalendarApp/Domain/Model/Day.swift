@@ -7,15 +7,23 @@
 
 import Foundation
 
+struct Event {
+    let content: String
+    let startTime: String // 우선 순위
+    let period: [Day]
+//    let icon
+//    let color: Color
+}
+
 struct Day: Identifiable {
-    let id = UUID()
+    let id: UUID = UUID()
     let date: Int
     let weekDay: WeekDay
     let month: Month
     let year: Int
 }
 
-enum WeekDay {
+enum WeekDay: String {
     case sunday
     case monday
     case tuesday
@@ -48,11 +56,11 @@ extension Day {
         
         guard let day = components.day,
               let month = components.month,
-              let year = components.year,
-              let weekday = components.weekday else {
+              let year = components.year else {
             return nil
         }
-        
+
+        let weekday = Calendar.current.component(.weekday, from: date)
         let weekDay: WeekDay
         switch weekday {
             case 1: weekDay = .sunday
@@ -66,5 +74,9 @@ extension Day {
         }
         
         self.init(date: day, weekDay: weekDay, month: Month(rawValue: month) ?? .january, year: year)
+    }
+    
+    static func isSame(lhs: Day, rhs: Day) -> Bool {
+        return lhs.year == rhs.year && lhs.month == rhs.month && lhs.date == rhs.date
     }
 }

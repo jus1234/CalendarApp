@@ -8,23 +8,27 @@
 import Foundation
 
 struct CalendarService {
+    func fetchToday() -> Day {
+        let currentDate = Date()
+        return Day(date: currentDate)!
+    }
     
     func fetchYear(year: Int) -> [Day]{
         var yearlyDays: [Day] = []
+        var daysInYear = 0
         
         for month in 1...12 {
             guard let daysInMonth = daysInMonth(month, forYear: year) else {
                 continue
             }
-            
-            for day in 1...daysInMonth {
-                if  let date = getDate(forDayOfYear: day, inYear: year),
-                    let dayObject = Day(date: date) {
-                    yearlyDays.append(dayObject)
-                }
+            daysInYear += daysInMonth
+        }
+        for day in 1...daysInYear {
+            if let date = getDate(forDayOfYear: day, inYear: year),
+               let dayObject = Day(date: date) {
+               yearlyDays.append(dayObject)
             }
         }
-        
         return yearlyDays
     }
     
