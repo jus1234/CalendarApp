@@ -49,7 +49,7 @@ struct CalendarView: View {
                 }
             }
             .frame(height: 600)
-            .scrollPosition(id: $dayId)
+            .scrollPosition(id: $dayId, anchor: .center)
             .scrollIndicators(.hidden)
             
         }
