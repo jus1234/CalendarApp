@@ -7,46 +7,12 @@
 
 import Foundation
 
-struct Event {
-    let content: String
-    let startTime: String // 우선 순위
-    let period: [Day]
-//    let icon
-//    let color: Color
-}
-
 struct Day: Identifiable, Equatable {
     let id: UUID = UUID()
     let date: Int
     let weekDay: WeekDay
     let month: Month
     let year: Int
-}
-
-enum WeekDay: String {
-    case sunday
-    case monday
-    case tuesday
-    case wednesday
-    case thursday
-    case friday
-    case saturday
-    case none
-}
-
-enum Month: Int {
-    case january = 1
-    case february
-    case march
-    case april
-    case may
-    case june
-    case july
-    case august
-    case september
-    case october
-    case november
-    case december
 }
 
 extension Day {

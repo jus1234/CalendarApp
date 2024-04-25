@@ -14,6 +14,10 @@
 		BD9A3E672BCE866900A1176B /* CalendarAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9A3E662BCE866900A1176B /* CalendarAppApp.swift */; };
 		BD9A3E6B2BCE866F00A1176B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9A3E6A2BCE866F00A1176B /* Assets.xcassets */; };
 		BD9A3E6E2BCE866F00A1176B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD9A3E6D2BCE866F00A1176B /* Preview Assets.xcassets */; };
+		BDA3A4502BDA3AF60000FC31 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A44F2BDA3AF60000FC31 /* TabBarView.swift */; };
+		BDA3A4532BDA3E390000FC31 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4522BDA3E390000FC31 /* WeekDay.swift */; };
+		BDA3A4552BDA3E6F0000FC31 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4542BDA3E6F0000FC31 /* Month.swift */; };
+		BDA3A4572BDA3E910000FC31 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4562BDA3E910000FC31 /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,10 @@
 		BD9A3E662BCE866900A1176B /* CalendarAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAppApp.swift; sourceTree = "<group>"; };
 		BD9A3E6A2BCE866F00A1176B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD9A3E6D2BCE866F00A1176B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BDA3A44F2BDA3AF60000FC31 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		BDA3A4522BDA3E390000FC31 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
+		BDA3A4542BDA3E6F0000FC31 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		BDA3A4562BDA3E910000FC31 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +49,7 @@
 		BD1B43B42BD39F3D008A6182 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				BDA3A4512BDA3E260000FC31 /* Enum */,
 				BD1B43B62BD39F53008A6182 /* Model */,
 				BD1B43B52BD39F4A008A6182 /* UseCase */,
 			);
@@ -59,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				BD1B43B72BD39F75008A6182 /* Day.swift */,
+				BDA3A4562BDA3E910000FC31 /* Event.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -66,6 +76,7 @@
 		BD1B43BB2BD3B8DC008A6182 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BDA3A44E2BDA3ACA0000FC31 /* Common */,
 				BD1B43BC2BD3B8EA008A6182 /* Calendar */,
 			);
 			path = Presentation;
@@ -122,6 +133,23 @@
 				BD9A3E6D2BCE866F00A1176B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BDA3A44E2BDA3ACA0000FC31 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BDA3A44F2BDA3AF60000FC31 /* TabBarView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BDA3A4512BDA3E260000FC31 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				BDA3A4522BDA3E390000FC31 /* WeekDay.swift */,
+				BDA3A4542BDA3E6F0000FC31 /* Month.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,10 +222,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDA3A4532BDA3E390000FC31 /* WeekDay.swift in Sources */,
+				BDA3A4572BDA3E910000FC31 /* Event.swift in Sources */,
 				BD1B43C02BD3BDF0008A6182 /* CalendarViewModel.swift in Sources */,
 				BD1B43BE2BD3BDD2008A6182 /* CalendarView.swift in Sources */,
 				BD9A3E672BCE866900A1176B /* CalendarAppApp.swift in Sources */,
+				BDA3A4552BDA3E6F0000FC31 /* Month.swift in Sources */,
 				BD1B43B82BD39F75008A6182 /* Day.swift in Sources */,
+				BDA3A4502BDA3AF60000FC31 /* TabBarView.swift in Sources */,
 				BD1B43BA2BD3A278008A6182 /* CalendarService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
