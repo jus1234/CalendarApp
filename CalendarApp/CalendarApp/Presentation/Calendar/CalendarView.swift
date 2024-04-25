@@ -53,102 +53,132 @@ struct CalendarView: View {
                 }
             }
             
-        
-            ScrollView(.vertical) {
-                ScrollViewReader { scrollViewProxy in
-                    LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
-                        ForEach(viewModel.dayList) { day in
-                            ZStack {
-                                DayCell(nowYear: $nowYear, 
-                                        nowMonth: $nowMonth,
-                                        day: day,
-                                        isToday: Day.isSame(lhs: day, rhs: viewModel.toDay))
-                                    .id(day.id)
-                                    .onAppear {
-                                        if day.month == .january && day.year == viewModel.firstYear && !isFirstLoad {
-                                            dayId = day.id
-                                            viewModel.fetchPreviousYear()
-                                        }
-                                        if day.month == .december && day.year == viewModel.lastYear && !isFirstLoad {
-                                            dayId = day.id
-                                            viewModel.fetchAfterYear()
-                                        }
-                                        if day.id == dayId {
-                                            isFirstLoad = false
-                                        }
-                                        nowPresentedDays.append(day)
-                                    }
-                                    .onDisappear {
-                                        nowPresentedDays = nowPresentedDays.filter { !Day.isSame(lhs: day, rhs: $0) }
-                                    }
-                                    .onChange(of: nowPresentedDays) {
-                                        if $1.count < 1{
-                                            return
-                                        }
-                                        var yearDictionary: [Int: Int] = [:]
-                                        var monthDictionary: [Month: Int] = [:]
-                                        $1.forEach { day in
-                                            if yearDictionary[day.year] != nil {
-                                                yearDictionary[day.year]? += 1
-                                            } else {
-                                                yearDictionary[day.year] = 1
+            ZStack(alignment: .bottomLeading) {
+                ScrollView(.vertical) {
+                    ScrollViewReader { scrollViewProxy in
+                        LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
+                            ForEach(viewModel.dayList) { day in
+                                ZStack {
+                                    DayCell(nowYear: $nowYear,
+                                            nowMonth: $nowMonth,
+                                            day: day,
+                                            isToday: Day.isSame(lhs: day, rhs: viewModel.toDay))
+                                        
+                                        .id(day.id)
+                                        .onAppear {
+                                            if day.month == .january && day.year == viewModel.firstYear && !isFirstLoad {
+                                                dayId = day.id
+                                                viewModel.fetchPreviousYear()
                                             }
-                                            if monthDictionary[day.month] != nil {
-                                                monthDictionary[day.month]? += 1
-                                            } else {
-                                                monthDictionary[day.month] = 1
+                                            if day.month == .december && day.year == viewModel.lastYear && !isFirstLoad {
+                                                dayId = day.id
+                                                viewModel.fetchAfterYear()
                                             }
+                                            if day.id == dayId {
+                                                isFirstLoad = false
+                                            }
+                                            nowPresentedDays.append(day)
                                         }
-                                        var maxYear: Int = 0
-                                        yearDictionary.forEach { (year, count) in
-                                            guard
-                                                let maxYearCount = yearDictionary[maxYear]
-                                            else {
-                                                maxYear = year
+                                        .onDisappear {
+                                            nowPresentedDays = nowPresentedDays.filter { !Day.isSame(lhs: day, rhs: $0) }
+                                        }
+                                        .onChange(of: nowPresentedDays) {
+                                            if $1.count < 1{
                                                 return
                                             }
-                                            maxYear = maxYearCount >= count ? maxYear : year
-                                        }
-                                        if nowYear != maxYear {
-                                            nowYear = maxYear
-                                        }
-                                        var maxMonth: Month?
-                                        monthDictionary.forEach { (month, count) in
-                                            guard
-                                                let maxMonthNotNil = maxMonth,
-                                                let maxMonthCount = monthDictionary[maxMonthNotNil]
-                                            else {
-                                                maxMonth = month
-                                                return
+                                            var yearDictionary: [Int: Int] = [:]
+                                            var monthDictionary: [Month: Int] = [:]
+                                            $1.forEach { day in
+                                                if yearDictionary[day.year] != nil {
+                                                    yearDictionary[day.year]? += 1
+                                                } else {
+                                                    yearDictionary[day.year] = 1
+                                                }
+                                                if monthDictionary[day.month] != nil {
+                                                    monthDictionary[day.month]? += 1
+                                                } else {
+                                                    monthDictionary[day.month] = 1
+                                                }
                                             }
-                                            maxMonth = maxMonthCount >= count ? maxMonth : month
+                                            var maxYear: Int = 0
+                                            yearDictionary.forEach { (year, count) in
+                                                guard
+                                                    let maxYearCount = yearDictionary[maxYear]
+                                                else {
+                                                    maxYear = year
+                                                    return
+                                                }
+                                                maxYear = maxYearCount >= count ? maxYear : year
+                                            }
+                                            if nowYear != maxYear {
+                                                nowYear = maxYear
+                                            }
+                                            var maxMonth: Month?
+                                            monthDictionary.forEach { (month, count) in
+                                                guard
+                                                    let maxMonthNotNil = maxMonth,
+                                                    let maxMonthCount = monthDictionary[maxMonthNotNil]
+                                                else {
+                                                    maxMonth = month
+                                                    return
+                                                }
+                                                maxMonth = maxMonthCount >= count ? maxMonth : month
+                                            }
+                                            if nowMonth != maxMonth {
+                                                nowMonth = maxMonth
+                                            }
                                         }
-                                        if nowMonth != maxMonth {
-                                            nowMonth = maxMonth
+                                        .opacity(nowYear == day.year && nowMonth == day.month ? 1.0 : 0.5)
+                                        .onTapGesture {
+                                            tappedDayId = day.id
                                         }
-                                    }
-                                    .opacity(nowYear == day.year && nowMonth == day.month ? 1.0 : 0.5)
-                                    .onTapGesture {
-                                        tappedDayId = day.id
-                                    }
-                                    
-                                Rectangle()
-                                    .fill(.gray)
-                                    .opacity(tappedDayId == day.id ? 0.2 : 0.0)
+                                        
+                                    Rectangle()
+                                        .fill(.gray)
+                                        .opacity(tappedDayId == day.id ? 0.2 : 0.0)
+                                }
                             }
                         }
-                    }
-                    .scrollTargetLayout()
-                    .onAppear {
-                        dayId = viewModel.toDay.id
-                        tappedDayId = viewModel.toDay.id
-                        scrollViewProxy.scrollTo(dayId)
+                        .scrollTargetLayout()
+                        .onAppear {
+                            dayId = viewModel.toDay.id
+                            tappedDayId = viewModel.toDay.id
+                            scrollViewProxy.scrollTo(dayId)
+                        }
                     }
                 }
+                .scrollPosition(id: $dayId, anchor: .center)
+                .scrollIndicators(.hidden)
+                .background(.white)
+                
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                            
+                    } label: {
+//                        Image(systemName: "")
+//                        Label("", systemImage: "")
+                        Text("New Action")
+                            .bold()
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(
+                                RoundedRectangle(
+                                    cornerRadius: 50,
+                                    style: .continuous
+                                )
+                                .fill(.indigo)
+                            )
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.bottom, 20)
+                
+
             }
-            .scrollPosition(id: $dayId, anchor: .center)
-            .scrollIndicators(.hidden)
-            .background(.white)
+            
             
         }
         .background(.indigo)
@@ -169,12 +199,8 @@ struct DayCell: View {
                 .background(isToday ? .blue : .white, in: .circle)
                 .font(.system(size: 13))
                 .bold()
-            Text("\(day.year)")
-                .padding(.horizontal, 5)
-                .font(.caption)
-            Text("\(day.month.rawValue)")
-                .padding(.horizontal, 5)
-                .font(.caption)
+                .padding(.vertical, 10)
+            Spacer()
         }
         .frame(height: 100)
     }
