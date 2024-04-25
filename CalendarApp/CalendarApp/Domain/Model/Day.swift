@@ -15,7 +15,7 @@ struct Event {
 //    let color: Color
 }
 
-struct Day: Identifiable {
+struct Day: Identifiable, Equatable {
     let id: UUID = UUID()
     let date: Int
     let weekDay: WeekDay
