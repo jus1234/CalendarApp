@@ -25,6 +25,7 @@ struct CalendarService {
             }
             daysInYear += daysInMonth
         }
+        
         for day in 1...daysInYear {
             guard
                 let date = getDate(forDayOfYear: day, inYear: year),
@@ -34,6 +35,7 @@ struct CalendarService {
             }
             yearlyDays.append(dayObject)
         }
+        
         return yearlyDays
     }
     
@@ -68,19 +70,22 @@ struct CalendarService {
         else {
             return nil
         }
+        
         return Calendar.current.range(of: .day, in: .month, for: date)?.count
     }
 
     private func dayOfYear(_ day: Int, inMonth month: Int, forYear year: Int) -> Int {
         var dayOfYear = day
+        
         for i in 1..<month {
             guard 
-                let daysInMonth = daysInMonth(i, forYear: year) else
-            {
+                let daysInMonth = daysInMonth(i, forYear: year) 
+            else {
                 continue
             }
             dayOfYear += daysInMonth
         }
+        
         return dayOfYear
     }
 }
