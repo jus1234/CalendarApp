@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @ObservedObject private var viewModel = CalendarViewModel()
+    @ObservedObject private var calendar = CalendarManager()
     @State private var dayId: Day.ID?
     @State private var isFirstLoad: Bool = true
     @State private var nowYear: Int?
@@ -17,9 +17,9 @@ struct CalendarView: View {
     @State private var tappedDayId: Day.ID?
     
     init() {
-        dayId = viewModel.toDay.id
-        nowYear = viewModel.toDay.year
-        nowMonth = viewModel.toDay.month
+        dayId = calendar.toDay.id
+        nowYear = calendar.toDay.year
+        nowMonth = calendar.toDay.month
     }
     
     var body: some View {
@@ -57,22 +57,22 @@ struct CalendarView: View {
                 ScrollView(.vertical) {
                     ScrollViewReader { scrollViewProxy in
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
-                            ForEach(viewModel.dayList) { day in
+                            ForEach(calendar.dayList) { day in
                                 ZStack {
                                     DayCell(nowYear: $nowYear,
                                             nowMonth: $nowMonth,
                                             day: day,
-                                            isToday: Day.isSame(lhs: day, rhs: viewModel.toDay))
+                                            isToday: Day.isSame(lhs: day, rhs: calendar.toDay))
                                         
                                         .id(day.id)
                                         .onAppear {
-                                            if day.month == .january && day.year == viewModel.firstYear && !isFirstLoad {
+                                            if day.month == .january && day.year == calendar.firstYear && !isFirstLoad {
                                                 dayId = day.id
-                                                viewModel.fetchPreviousYear()
+                                                calendar.fetchPreviousYear()
                                             }
-                                            if day.month == .december && day.year == viewModel.lastYear && !isFirstLoad {
+                                            if day.month == .december && day.year == calendar.lastYear && !isFirstLoad {
                                                 dayId = day.id
-                                                viewModel.fetchAfterYear()
+                                                calendar.fetchAfterYear()
                                             }
                                             if day.id == dayId {
                                                 isFirstLoad = false
@@ -141,8 +141,8 @@ struct CalendarView: View {
                         }
                         .scrollTargetLayout()
                         .onAppear {
-                            dayId = viewModel.toDay.id
-                            tappedDayId = viewModel.toDay.id
+                            dayId = calendar.toDay.id
+                            tappedDayId = calendar.toDay.id
                             scrollViewProxy.scrollTo(dayId)
                         }
                     }

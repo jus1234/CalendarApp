@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CalendarViewModel: ObservableObject {
+class CalendarManager: ObservableObject {
     private let calendarService = CalendarService()
     @Published var dayList: [Day]
     var toDay: Day
