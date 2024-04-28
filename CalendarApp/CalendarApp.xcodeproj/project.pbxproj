@@ -18,6 +18,7 @@
 		BDA3A4532BDA3E390000FC31 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4522BDA3E390000FC31 /* WeekDay.swift */; };
 		BDA3A4552BDA3E6F0000FC31 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4542BDA3E6F0000FC31 /* Month.swift */; };
 		BDA3A4572BDA3E910000FC31 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA3A4562BDA3E910000FC31 /* Event.swift */; };
+		BDD235652BDE4DFE0075AB3C /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD235642BDE4DFE0075AB3C /* DayCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		BDA3A4522BDA3E390000FC31 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		BDA3A4542BDA3E6F0000FC31 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		BDA3A4562BDA3E910000FC31 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		BDD235642BDE4DFE0075AB3C /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			children = (
 				BD1B43BD2BD3BDD2008A6182 /* CalendarView.swift */,
 				BD1B43BF2BD3BDF0008A6182 /* CalendarManager.swift */,
+				BDD235642BDE4DFE0075AB3C /* DayCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			files = (
 				BDA3A4532BDA3E390000FC31 /* WeekDay.swift in Sources */,
 				BDA3A4572BDA3E910000FC31 /* Event.swift in Sources */,
+				BDD235652BDE4DFE0075AB3C /* DayCell.swift in Sources */,
 				BD1B43C02BD3BDF0008A6182 /* CalendarManager.swift in Sources */,
 				BD1B43BE2BD3BDD2008A6182 /* CalendarView.swift in Sources */,
 				BD9A3E672BCE866900A1176B /* CalendarAppApp.swift in Sources */,
