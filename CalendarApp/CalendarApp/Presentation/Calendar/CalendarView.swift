@@ -157,8 +157,6 @@ struct CalendarView: View {
                     Button {
                             
                     } label: {
-//                        Image(systemName: "")
-//                        Label("", systemImage: "")
                         Text("New Action")
                             .bold()
                             .padding()
