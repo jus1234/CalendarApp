@@ -61,6 +61,7 @@
 		BD1B43B52BD39F4A008A6182 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				BD1B43BF2BD3BDF0008A6182 /* CalendarManager.swift */,
 				BD1B43B92BD3A278008A6182 /* CalendarService.swift */,
 			);
 			path = UseCase;
@@ -88,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				BD1B43BD2BD3BDD2008A6182 /* CalendarView.swift */,
-				BD1B43BF2BD3BDF0008A6182 /* CalendarManager.swift */,
 				BDD235642BDE4DFE0075AB3C /* DayCell.swift */,
 			);
 			path = Calendar;

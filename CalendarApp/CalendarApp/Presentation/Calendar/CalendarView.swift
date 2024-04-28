@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @ObservedObject private var calendar = CalendarManager()
+    @State private var calendar = CalendarManager()
     @State private var dayId: Day.ID?
     @State private var isFirstLoad: Bool = true
     @State private var nowYear: Int?

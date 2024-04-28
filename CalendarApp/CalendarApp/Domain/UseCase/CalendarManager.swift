@@ -7,18 +7,18 @@
 
 import Foundation
 
-class CalendarManager: ObservableObject {
+@Observable class CalendarManager {
     private let calendarService = CalendarService()
-    @Published var dayList: [Day]
+    var dayList: [Day]
     var toDay: Day
-    var lastYear: Int
-    var firstYear: Int
+    var lastYear: Int = 0
+    var firstYear: Int = 0
     
     init() {
         self.dayList = calendarService.fetchYear()
         self.toDay = calendarService.fetchToday()
-        self.lastYear = toDay.year
-        self.firstYear = toDay.year
+        lastYear = toDay.year
+        firstYear = toDay.year
         setToday()
     }
     
