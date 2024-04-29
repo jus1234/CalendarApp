@@ -24,34 +24,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("TODAY")
-                    .font(.system(size: 14))
-                    .foregroundStyle(Color.white)
-                Spacer()
-                Text("\(nowMonth?.name ?? "") \(String(nowYear ?? 0))")
-                    .foregroundStyle(.white)
-                    .padding(.leading, 20)
-                    .bold()
-                Spacer()
-                    Image(systemName: "square.grid.3x3.square")
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(Color.white)
-                .padding(.trailing, 30)
-                Image(systemName: "line.horizontal.3")
-                    .frame(width: 20, height: 20)
-                    .foregroundStyle(Color.white)
-            }
-            .padding(.horizontal, 10)
-            
-            HStack(spacing: 0) {
-                ForEach(0..<7, id: \.self) { i in
-                    Text(WeekDay.WeekDayList[i].shortName)
-                        .font(.system(size: 14))
-                        .foregroundStyle(.white)
-                        .frame(width: UIScreen.main.bounds.width / 7)
-                }
-            }
+            CalendarHeader(nowMonth: $nowMonth, nowYear: $nowYear)
             
             ZStack(alignment: .bottomLeading) {
                 ScrollView(.vertical) {
@@ -63,17 +36,38 @@ struct CalendarView: View {
                                             nowMonth: $nowMonth,
                                             day: day,
                                             isToday: Day.isSame(lhs: day, rhs: calendar.toDay))
-                                        .onAppear { didAppeardDay(day: day) }
-                                        .onDisappear { nowPresentedDays = nowPresentedDays.filter { !Day.isSame(lhs: day, rhs: $0) } }
-                                        .onChange(of: nowPresentedDays) { checkNowPresentedDays(presentedDays: $1) }
+                                        .onAppear {
+                                            didAppeardDay(day: day)
+                                        }
+                                        .onDisappear {
+                                            nowPresentedDays = nowPresentedDays.filter {
+                                                !Day.isSame(lhs: day, rhs: $0)
+                                            }
+                                        }
+                                        .onChange(of: nowPresentedDays) {
+                                            checkNowPresentedDays(presentedDays: $1)
+                                        }
                                         .opacity(nowYear == day.year && nowMonth == day.month ? 1.0 : 0.5)
-                                        .onTapGesture { tappedDayId = day.id }
+                                        .onTapGesture {
+                                            tappedDayId = day.id
+                                        }
                                         .id(day.id)
                                         
                                     Rectangle()
                                         .fill(.gray)
                                         .opacity(tappedDayId == day.id ? 0.2 : 0.0)
+                                        
                                 }
+                                .overlay {
+                                    if day.weekDay == .sunday {
+                                        GeometryReader { geometryProxy in
+                                            EventCell(startDay: day)
+                                                .frame(width: 400, height: 100)
+                                                .opacity(nowYear == day.year && nowMonth == day.month ? 1.0 : 0.5)
+                                        }
+                                    }
+                                }
+                                
                             }
                         }
                         .scrollTargetLayout()
@@ -179,6 +173,6 @@ extension CalendarView {
     }
 }
 
-#Preview {
-    CalendarView()
-}
+//#Preview {
+//    CalendarView()
+//}
