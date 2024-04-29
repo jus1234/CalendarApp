@@ -10,7 +10,12 @@ import Foundation
 struct CalendarService {
     func fetchToday() -> Day {
         let currentDate = Date()
-        return Day(date: currentDate)!
+        guard
+            let today = Day(date: currentDate)
+        else {
+            return Day(date: 1, weekDay: .none, month: .january, year: 0)
+        }
+        return today
     }
     
     func fetchYear(year: Int) -> [Day]{
