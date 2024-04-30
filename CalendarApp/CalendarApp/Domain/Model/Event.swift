@@ -5,12 +5,12 @@
 //  Created by Wooseok on 4/25/24.
 //
 
-import Foundation
+import SwiftUI
 
 struct Event {
+    let eventType: EventType
     let content: String
-    let startTime: String // 우선 순위
     let period: [Day]
-//    let icon
-//    let color: Color
+    let color: Color
+    let fontColor: Color
 }
